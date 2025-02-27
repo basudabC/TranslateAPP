@@ -8,7 +8,7 @@ import logging
 
 logging.basicConfig(level=logging.DEBUG)
 
-app = Flask(__name__, static_folder='static', static_url_path='/static')
+app = Flask(__name__)
 socketio = SocketIO(app, async_mode='threading')
 
 @app.route('/')
@@ -22,9 +22,11 @@ def process_audio(data):
     output_lang = data.get('output_lang', 'es-ES')
 
     try:
+        # Translate Text
         translated = GoogleTranslator(source=input_lang[:2], target=output_lang[:2]).translate(transcript)
         socketio.emit('translated_update', {'text': translated})
 
+        # Text to Speech
         audio_file = f"static/audio/translated_{int(time.time())}.mp3"
         tts = gTTS(text=translated, lang=output_lang[:2], slow=False)
         tts.save(audio_file)
