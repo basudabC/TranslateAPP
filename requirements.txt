@@ -1,0 +1,8 @@
+Flask==2.3.2
+Flask-SocketIO==5.3.4
+speechrecognition==3.10.0
+deep_translator==1.11.4
+gtts==2.5.1
+pyee==9.0.4
+gunicorn==20.1.0
+pyaudio==0.2.13
